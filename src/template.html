@@ -7,6 +7,37 @@
     <title>Weather App</title>
   </head>
   <body>
-    <div class="nav"></div>
+    <div class="nav">
+      <div class="search-div">
+        <label for="search">Change location:</label>
+        <input type="search" id="search" name="search" />
+        <button id="search-btn" type="button">Search</button>
+      </div>
+      <fieldset>
+        <div class="temp-c-div">
+          <input
+            type="radio"
+            id="temp-c"
+            name="temp-btn"
+            value="temp-c"
+            checked
+          />
+          <label for="temp-c">&#8451;</label>
+        </div>
+        <div class="temp-f-div">
+          <input type="radio" id="temp-f" name="temp-btn" value="temp-f" />
+          <label for="temp-f">&#8457;</label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="main">
+      <div class="now">
+        <img id="main-icon" src="#" alt="main-icon" />
+      </div>
+      <div class="later">
+        <div class="hourly"></div>
+        <div class="daily"></div>
+      </div>
+    </div>
   </body>
 </html>
