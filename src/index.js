@@ -1,11 +1,6 @@
 import "./style.css";
 //import image from '.image.png'; (put images in src folder)
 
-//Query Selectors
-const mainIcon = document.querySelector("#main-icon");
-const searchBtn = document.querySelector("#search-btn");
-const searchInput = document.querySelector("#search");
-
 async function defaultData() {
   try {
     const response = await fetch(
@@ -28,15 +23,15 @@ async function defaultData() {
       humidity: data.current.humidity,
       day: data.current.is_day,
     };
-    return weatherData;
+    createNowDisplay(weatherData.location, weatherData.time, weatherData.icon);
   } catch (err) {
     alert(err);
     //mainIcon.src = DEFAULT IMAGE
   }
 }
-defaultData();
 
 async function getData() {
+  const searchInput = document.querySelector("#search");
   try {
     const response = await fetch(
       `https://api.weatherapi.com/v1/current.json?key=eabfe4bec5494c7f88485950232903&q=${searchInput.value}`,
@@ -58,18 +53,37 @@ async function getData() {
       humidity: data.current.humidity,
       day: data.current.is_day,
     };
-    mainIcon.src = weatherData.icon;
-    return weatherData;
+    createNowDisplay(weatherData.location, weatherData.time, weatherData.icon);
   } catch (err) {
     alert(err);
     //mainIcon.src = DEFAULT IMAGE
   }
 }
 
-searchBtn.addEventListener("click", () => {
-  if (searchInput.value !== "") {
-    getData();
-  } else {
-    defaultData();
-  }
-});
+function createListeners() {
+  const searchBtn = document.querySelector("#search-btn");
+  const searchInput = document.querySelector("#search");
+  searchBtn.addEventListener("click", () => {
+    if (searchInput.value !== "") {
+      getData();
+      createNowDisplay();
+    } else {
+      defaultData();
+      createNowDisplay();
+    }
+  });
+}
+
+function createNowDisplay(location, time, icon) {
+  const locationDiv = document.querySelector("#location");
+  const timeDiv = document.querySelector("#time");
+  const mainIcon = document.querySelector("#main-icon");
+
+  locationDiv.textContent = location;
+  timeDiv.textContent = time;
+  mainIcon.src = icon;
+}
+
+createListeners();
+defaultData();
+createNowDisplay();
