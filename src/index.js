@@ -9,6 +9,7 @@ async function defaultData() {
       { mode: "cors" }
     );
     const data = await response.json();
+    console.log(data);
     const weatherData = {
       location: data.location.name,
       time: data.location.localtime,
@@ -26,11 +27,14 @@ async function defaultData() {
     };
     createNowDisplay(
       weatherData.location,
-      weatherData.time,
       weatherData.icon,
       weatherData.desc,
       weatherData.tempC,
-      weatherData.feelslikeC
+      weatherData.feelslikeC,
+      weatherData.rain,
+      weatherData.humidity,
+      weatherData.wind,
+      weatherData.gust
     );
   } catch (err) {
     alert(err);
@@ -63,11 +67,14 @@ async function getData() {
     };
     createNowDisplay(
       weatherData.location,
-      weatherData.time,
       weatherData.icon,
       weatherData.desc,
       weatherData.tempC,
-      weatherData.feelslikeC
+      weatherData.feelslikeC,
+      weatherData.rain,
+      weatherData.humidity,
+      weatherData.wind,
+      weatherData.gust
     );
   } catch (err) {
     alert(err);
@@ -89,22 +96,40 @@ function createListeners() {
   });
 }
 
-function createNowDisplay(location, time, icon, desc, temp, feelTemp) {
+function createNowDisplay(
+  location,
+  icon,
+  desc,
+  temp,
+  feelTemp,
+  precip,
+  humidity,
+  wind,
+  gusts
+) {
   const locationDiv = document.querySelector("#location");
   const timeDiv = document.querySelector("#time");
   const mainIcon = document.querySelector("#main-icon");
   const descDiv = document.querySelector("#desc");
   const tempDiv = document.querySelector("#temp");
   const feelsDiv = document.querySelector("#feels");
+  const precipDiv = document.querySelector("#precip");
+  const humidityDiv = document.querySelector("#humidity");
+  const windDiv = document.querySelector("#wind");
+  const gustsDiv = document.querySelector("#gusts");
 
   locationDiv.textContent = location;
-  timeDiv.textContent = format(new Date(time), "EEEE hh:mmaaaaa'm'");
+  timeDiv.textContent = format(new Date(), "EEEE hh:mmaaaaa'm'");
   mainIcon.src = icon;
   descDiv.textContent = desc;
   tempDiv.textContent = temp + String.fromCodePoint(8451);
   feelsDiv.textContent = "Feels like " + feelTemp + String.fromCodePoint(8451);
+  precipDiv.textContent = `Precipitation: ${precip}mm`;
+  humidityDiv.textContent = `Humidity: ${humidity}%`;
+  windDiv.textContent = `Wind speed: ${wind}mph`;
+  gustsDiv.textContent = `Gusts of up to: ${gusts}mph`;
 }
 
-createListeners();
 defaultData();
+createListeners();
 createNowDisplay();
