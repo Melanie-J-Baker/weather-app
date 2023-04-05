@@ -1,4 +1,5 @@
 import "./style.css";
+import { format } from "date-fns";
 //import image from '.image.png'; (put images in src folder)
 
 async function defaultData() {
@@ -23,7 +24,14 @@ async function defaultData() {
       humidity: data.current.humidity,
       day: data.current.is_day,
     };
-    createNowDisplay(weatherData.location, weatherData.time, weatherData.icon);
+    createNowDisplay(
+      weatherData.location,
+      weatherData.time,
+      weatherData.icon,
+      weatherData.desc,
+      weatherData.tempC,
+      weatherData.feelslikeC
+    );
   } catch (err) {
     alert(err);
     //mainIcon.src = DEFAULT IMAGE
@@ -53,7 +61,14 @@ async function getData() {
       humidity: data.current.humidity,
       day: data.current.is_day,
     };
-    createNowDisplay(weatherData.location, weatherData.time, weatherData.icon);
+    createNowDisplay(
+      weatherData.location,
+      weatherData.time,
+      weatherData.icon,
+      weatherData.desc,
+      weatherData.tempC,
+      weatherData.feelslikeC
+    );
   } catch (err) {
     alert(err);
     //mainIcon.src = DEFAULT IMAGE
@@ -74,14 +89,20 @@ function createListeners() {
   });
 }
 
-function createNowDisplay(location, time, icon) {
+function createNowDisplay(location, time, icon, desc, temp, feelTemp) {
   const locationDiv = document.querySelector("#location");
   const timeDiv = document.querySelector("#time");
   const mainIcon = document.querySelector("#main-icon");
+  const descDiv = document.querySelector("#desc");
+  const tempDiv = document.querySelector("#temp");
+  const feelsDiv = document.querySelector("#feels");
 
   locationDiv.textContent = location;
-  timeDiv.textContent = time;
+  timeDiv.textContent = format(new Date(time), "EEEE hh:mmaaaaa'm'");
   mainIcon.src = icon;
+  descDiv.textContent = desc;
+  tempDiv.textContent = temp + String.fromCodePoint(8451);
+  feelsDiv.textContent = "Feels like " + feelTemp + String.fromCodePoint(8451);
 }
 
 createListeners();
