@@ -1,6 +1,5 @@
 import "./style.css";
 import { format, parseISO } from "date-fns";
-import rain from "./assets/rain.jpg";
 
 async function defaultData() {
   try {
@@ -12,7 +11,7 @@ async function defaultData() {
     console.log(data);
     const weatherData = {
       location: data.location.name,
-      time: data.location.localtime,
+      time: data.location.localtime_epoch,
       desc: data.current.condition.text,
       icon: data.current.condition.icon,
       code: data.current.condition.code,
@@ -62,7 +61,7 @@ async function getData() {
     const data = await response.json();
     const weatherData = {
       location: data.location.name,
-      time: data.location.localtime,
+      time: data.location.localtime_epoch,
       desc: data.current.condition.text,
       icon: data.current.condition.icon,
       code: data.current.condition.code,
@@ -112,6 +111,15 @@ function createListeners() {
     } else {
       defaultData();
       createNowDisplay();
+    }
+  });
+
+  // Execute search when user releases enter on the keyboard
+  searchInput.addEventListener("keyup", function (event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      searchBtn.click();
     }
   });
 }
@@ -232,7 +240,9 @@ function createNowDisplay(
 
   locationDiv.textContent = location;
   console.log(time);
-  timeDiv.textContent = format(new Date(), "EEEE hh:mmaaaaa'm'");
+  let date = new Date(time * 1000);
+  console.log(date);
+  timeDiv.textContent = format(date, "EEEE hh:mmaaaaa'm'");
   mainIcon.src = icon;
   descDiv.textContent = desc;
   tempDiv.textContent = temp + String.fromCodePoint(8451);
@@ -240,7 +250,7 @@ function createNowDisplay(
   precipDiv.textContent = `Precipitation: ${precip}mm`;
   humidityDiv.textContent = `Humidity: ${humidity}%`;
   windDiv.textContent = `Wind speed: ${wind}mph`;
-  gustsDiv.textContent = `Gusts of up to: ${gusts}mph`;
+  gustsDiv.textContent = `(Gusts of up to: ${gusts}mph)`;
 }
 
 defaultData();
