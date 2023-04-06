@@ -1,1 +1,12 @@
 /* @font-face {} (put fonts in src folder)*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#now {
+  background-image: url("./assets/rain.jpg");
+  background-size: cover;
+}

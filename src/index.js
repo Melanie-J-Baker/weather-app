@@ -1,6 +1,6 @@
 import "./style.css";
 import { format } from "date-fns";
-//import image from '.image.png'; (put images in src folder)
+import rain from "./assets/rain.jpg";
 
 async function defaultData() {
   try {
@@ -15,6 +15,7 @@ async function defaultData() {
       time: data.location.localtime,
       desc: data.current.condition.text,
       icon: data.current.condition.icon,
+      code: data.current.condition.code,
       tempC: data.current.temp_c,
       tempF: data.current.temp_f,
       feelslikeC: data.current.feelslike_c,
@@ -26,6 +27,7 @@ async function defaultData() {
       day: data.current.is_day,
     };
     createNowDisplay(
+      weatherData.code,
       weatherData.location,
       weatherData.icon,
       weatherData.desc,
@@ -55,6 +57,7 @@ async function getData() {
       time: data.location.localtime,
       desc: data.current.condition.text,
       icon: data.current.condition.icon,
+      code: data.current.condition.code,
       tempC: data.current.temp_c,
       tempF: data.current.temp_f,
       feelslikeC: data.current.feelslike_c,
@@ -66,6 +69,7 @@ async function getData() {
       day: data.current.is_day,
     };
     createNowDisplay(
+      weatherData.code,
       weatherData.location,
       weatherData.icon,
       weatherData.desc,
@@ -97,6 +101,7 @@ function createListeners() {
 }
 
 function createNowDisplay(
+  code,
   location,
   icon,
   desc,
@@ -107,6 +112,7 @@ function createNowDisplay(
   wind,
   gusts
 ) {
+  const nowDiv = document.querySelector("#now");
   const locationDiv = document.querySelector("#location");
   const timeDiv = document.querySelector("#time");
   const mainIcon = document.querySelector("#main-icon");
@@ -118,6 +124,11 @@ function createNowDisplay(
   const windDiv = document.querySelector("#wind");
   const gustsDiv = document.querySelector("#gusts");
 
+  if (code === 1003) {
+    console.log(code);
+    nowDiv.style.backgroundImage = "url('assets/cloudy.jpg')";
+    //"url(<%=require('../src/assets/rain.jpg')%>)"
+  }
   locationDiv.textContent = location;
   timeDiv.textContent = format(new Date(), "EEEE hh:mmaaaaa'm'");
   mainIcon.src = icon;
