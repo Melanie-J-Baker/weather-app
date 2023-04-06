@@ -129,12 +129,12 @@ function changeTempListener(tempC, tempF, feelsC, feelsF) {
 
   radioF.addEventListener("click", () => {
     tempDiv.textContent = tempF + String.fromCodePoint(8457);
-    feelsDiv.textContent = feelsF + String.fromCodePoint(8457);
+    feelsDiv.textContent = "Feels like " + feelsF + String.fromCodePoint(8457);
   });
 
   radioC.addEventListener("click", () => {
     tempDiv.textContent = tempC + String.fromCodePoint(8451);
-    feelsDiv.textContent = feelsC + String.fromCodePoint(8451);
+    feelsDiv.textContent = "Feels like " + feelsC + String.fromCodePoint(8451);
   });
 }
 

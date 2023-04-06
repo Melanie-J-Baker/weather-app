@@ -39,12 +39,13 @@ body {
 
 #search-btn {
   appearance: none;
-  padding: 3px 10px 3px 10px;
+  padding: 5px 12px 5px 12px;
   color: white;
   background-color: black;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   border: none;
   border-radius: 5px;
+  font-size: 1rem;
 }
 
 #search-btn:hover {
@@ -65,6 +66,10 @@ fieldset {
 input[type="radio"] {
   padding: 3px;
   accent-color: black;
+}
+
+input[type="radio"]:hover {
+  cursor: pointer;
 }
 
 #main {
