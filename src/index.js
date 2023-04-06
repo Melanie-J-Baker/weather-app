@@ -1,5 +1,5 @@
 import "./style.css";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import rain from "./assets/rain.jpg";
 
 async function defaultData() {
@@ -37,7 +37,14 @@ async function defaultData() {
       weatherData.humidity,
       weatherData.wind,
       weatherData.gust,
-      weatherData.day
+      weatherData.day,
+      weatherData.time
+    );
+    changeTempListener(
+      weatherData.tempC,
+      weatherData.tempF,
+      weatherData.feelslikeC,
+      weatherData.feelslikeF
     );
   } catch (err) {
     alert(err);
@@ -80,7 +87,14 @@ async function getData() {
       weatherData.humidity,
       weatherData.wind,
       weatherData.gust,
-      weatherData.day
+      weatherData.day,
+      weatherData.time
+    );
+    changeTempListener(
+      weatherData.tempC,
+      weatherData.tempF,
+      weatherData.feelslikeC,
+      weatherData.feelslikeF
     );
   } catch (err) {
     alert(err);
@@ -102,6 +116,23 @@ function createListeners() {
   });
 }
 
+function changeTempListener(tempC, tempF, feelsC, feelsF) {
+  const radioC = document.querySelector("#temp-c");
+  const radioF = document.querySelector("#temp-f");
+  const tempDiv = document.querySelector("#temp");
+  const feelsDiv = document.querySelector("#feels");
+
+  radioF.addEventListener("click", () => {
+    tempDiv.textContent = tempF + String.fromCodePoint(8457);
+    feelsDiv.textContent = feelsF + String.fromCodePoint(8457);
+  });
+
+  radioC.addEventListener("click", () => {
+    tempDiv.textContent = tempC + String.fromCodePoint(8451);
+    feelsDiv.textContent = feelsC + String.fromCodePoint(8451);
+  });
+}
+
 function createNowDisplay(
   code,
   location,
@@ -113,7 +144,8 @@ function createNowDisplay(
   humidity,
   wind,
   gusts,
-  day
+  day,
+  time
 ) {
   const nowDiv = document.querySelector("#now");
   const locationDiv = document.querySelector("#location");
@@ -199,6 +231,7 @@ function createNowDisplay(
   }
 
   locationDiv.textContent = location;
+  console.log(time);
   timeDiv.textContent = format(new Date(), "EEEE hh:mmaaaaa'm'");
   mainIcon.src = icon;
   descDiv.textContent = desc;
