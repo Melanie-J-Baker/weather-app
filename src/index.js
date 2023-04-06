@@ -1,10 +1,58 @@
 import "./style.css";
-import { format, parseISO } from "date-fns";
 
 async function defaultData() {
   try {
     const response = await fetch(
       `https://api.weatherapi.com/v1/current.json?key=eabfe4bec5494c7f88485950232903&q=London`,
+      { mode: "cors" }
+    );
+    const data = await response.json();
+    const weatherData = {
+      location: data.location.name,
+      time: data.location.localtime_epoch,
+      desc: data.current.condition.text,
+      icon: data.current.condition.icon,
+      code: data.current.condition.code,
+      tempC: data.current.temp_c,
+      tempF: data.current.temp_f,
+      feelslikeC: data.current.feelslike_c,
+      feelslikeF: data.current.feelslike_f,
+      wind: data.current.wind_mph,
+      gust: data.current.gust_mph,
+      rain: data.current.precip_mm,
+      humidity: data.current.humidity,
+      day: data.current.is_day,
+    };
+    createNowDisplay(
+      weatherData.code,
+      weatherData.location,
+      weatherData.icon,
+      weatherData.desc,
+      weatherData.tempC,
+      weatherData.feelslikeC,
+      weatherData.rain,
+      weatherData.humidity,
+      weatherData.wind,
+      weatherData.gust,
+      weatherData.day
+    );
+    changeTempListener(
+      weatherData.tempC,
+      weatherData.tempF,
+      weatherData.feelslikeC,
+      weatherData.feelslikeF
+    );
+  } catch (err) {
+    alert(err);
+    //mainIcon.src = DEFAULT IMAGE
+  }
+}
+
+async function getData() {
+  const searchInput = document.querySelector("#search");
+  try {
+    const response = await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=eabfe4bec5494c7f88485950232903&q=${searchInput.value}`,
       { mode: "cors" }
     );
     const data = await response.json();
@@ -36,58 +84,7 @@ async function defaultData() {
       weatherData.humidity,
       weatherData.wind,
       weatherData.gust,
-      weatherData.day,
-      weatherData.time
-    );
-    changeTempListener(
-      weatherData.tempC,
-      weatherData.tempF,
-      weatherData.feelslikeC,
-      weatherData.feelslikeF
-    );
-  } catch (err) {
-    alert(err);
-    //mainIcon.src = DEFAULT IMAGE
-  }
-}
-
-async function getData() {
-  const searchInput = document.querySelector("#search");
-  try {
-    const response = await fetch(
-      `https://api.weatherapi.com/v1/current.json?key=eabfe4bec5494c7f88485950232903&q=${searchInput.value}`,
-      { mode: "cors" }
-    );
-    const data = await response.json();
-    const weatherData = {
-      location: data.location.name,
-      time: data.location.localtime_epoch,
-      desc: data.current.condition.text,
-      icon: data.current.condition.icon,
-      code: data.current.condition.code,
-      tempC: data.current.temp_c,
-      tempF: data.current.temp_f,
-      feelslikeC: data.current.feelslike_c,
-      feelslikeF: data.current.feelslike_f,
-      wind: data.current.wind_mph,
-      gust: data.current.gust_mph,
-      rain: data.current.precip_mm,
-      humidity: data.current.humidity,
-      day: data.current.is_day,
-    };
-    createNowDisplay(
-      weatherData.code,
-      weatherData.location,
-      weatherData.icon,
-      weatherData.desc,
-      weatherData.tempC,
-      weatherData.feelslikeC,
-      weatherData.rain,
-      weatherData.humidity,
-      weatherData.wind,
-      weatherData.gust,
-      weatherData.day,
-      weatherData.time
+      weatherData.day
     );
     changeTempListener(
       weatherData.tempC,
@@ -152,12 +149,10 @@ function createNowDisplay(
   humidity,
   wind,
   gusts,
-  day,
-  time
+  day
 ) {
   const nowDiv = document.querySelector("#now");
   const locationDiv = document.querySelector("#location");
-  const timeDiv = document.querySelector("#time");
   const mainIcon = document.querySelector("#main-icon");
   const descDiv = document.querySelector("#desc");
   const tempDiv = document.querySelector("#temp");
@@ -239,10 +234,6 @@ function createNowDisplay(
   }
 
   locationDiv.textContent = location;
-  console.log(time);
-  let date = new Date(time * 1000);
-  console.log(date);
-  timeDiv.textContent = format(date, "EEEE hh:mmaaaaa'm'");
   mainIcon.src = icon;
   descDiv.textContent = desc;
   tempDiv.textContent = temp + String.fromCodePoint(8451);
