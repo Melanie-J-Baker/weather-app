@@ -13,7 +13,7 @@ body {
   color: white;
 }
 
-#nav {
+.nav {
   width: 100vw;
   height: 50px;
   display: flex;
