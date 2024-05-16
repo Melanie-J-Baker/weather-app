@@ -1,14 +1,12 @@
 # weather-app
 
-Create a weather forecast site using weatherAPI. You should be able to search for a specific location and toggle displaying the data in Fahrenheit or Celsius.
+Created as part of the Odin Project full stack JavaScript course: https://www.theodinproject.com/lessons/node-path-javascript-weather-app
 
-You should change the look of the page based on the data, maybe by changing the color of the background or by adding images that describe the weather. Feel free to use promises or async/await.
+Visit the app here:
+https://melanie-j-baker.github.io/weather-app/
 
-Write the functions that hit the API. You’re going to want functions that can take a location and return the weather data for that location. For now, just console.log() the information.
+A weather forecast site using a weather API. Can search for a specific location and toggle displaying the data in Fahrenheit or Celsius.
 
-Write the functions that process the JSON data you’re getting from the API and return an object with only the data you require for your app.
+The look of the page changes based on the data, maybe by changing the color of the background or by adding images that describe the weather.
 
-Set up a simple form that will let users input their location and will fetch the weather info (still just console.log() it).
-Display the information on your webpage and add any styling you like
-
-Optional: add a ‘loading’ component that displays from the time the form is submitted until the information comes back from the API.
+![image](https://github.com/Melanie-J-Baker/weather-app/assets/104843873/f55b9b5f-2263-46aa-a58e-25a1f80e51f0)
