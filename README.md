@@ -1,6 +1,6 @@
 # weather-app
 
-Created as part of the Odin Project full stack JavaScript course.
+Created as part of the Odin Project full stack JavaScript course: https://www.theodinproject.com/lessons/node-path-javascript-weather-app
 
 Visit the app here:
 https://melanie-j-baker.github.io/weather-app/
